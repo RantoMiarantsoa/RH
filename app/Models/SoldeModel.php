@@ -38,4 +38,12 @@ class SoldeModel extends Model
                     ->where('annee',         $annee)
                     ->update();
     }
+    public function recréditer(int $employeId, int $typeCongeId, int $annee, float $jours): bool
+{
+    return $this->set('jour_pris', "jour_pris - $jours", false)
+                ->where('employe_id',    $employeId)
+                ->where('type_conge_id', $typeCongeId)
+                ->where('annee',         $annee)
+                ->update();
+}
 }

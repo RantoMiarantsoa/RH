@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\SoldeModel;
+use App\Models\TypeCongeModel;
 
 class CongeModel extends Model
 {
     protected $table      = 'conges';
     protected $primaryKey = 'id';
-    protected $useTimestamps = true;  // gère created_at / updated_at
+    protected $useTimestamps = true; 
 
     protected $allowedFields = [
         'employe_id', 'type_conge_id', 'date_debut', 'date_fin',
@@ -48,6 +50,21 @@ class CongeModel extends Model
 
     public function approuver(int $id, int $rhId, string $commentaire = ''): bool
     {
+
+    $conge = $this->find($id);
+
+    $soldeModel = new SoldeModel();
+  $annee = (int) substr($conge['date_debut'], 0, 4);
+        $typeCongeModel = new TypeCongeModel();
+        $typeConge = $typeCongeModel->find($conge['type_conge_id']);
+        if($typeConge['deductible']){
+            $soldeModel->deduire(
+                $conge['employe_id'],
+                $conge['type_conge_id'],
+                $annee,
+                $conge['nb_jours']
+                );
+                }
         return $this->update($id, [
             'statut'         => 'approuve',
             'commentaire_rh' => $commentaire,
@@ -55,10 +72,52 @@ class CongeModel extends Model
         ]);
     }
 
-    public function refuser(int $id, int $rhId, string $motif): bool
+  public function refuser(int $id, int $rhId, string $motif): bool
+{
+    $conge = $this->find($id);
+    $soldeModel = new SoldeModel();
+    $annee = (int) substr($conge['date_debut'],0,4);
+    $typeCongeModel= new TypeCongeModel();
+    if($conge['statut']=='approuve'){
+        $typeConge = $typeCongeModel->find($conge['type_conge_id']);
+
+           if($typeConge['deductible']){
+            $soldeModel->recréditer(
+                $conge['employe_id'],
+                $conge['type_conge_id'],
+                $annee,
+                $conge['nb_jours']
+                );
+                }
+
+        }
+    return $this->update($id, [
+        'statut'         => 'refuse',
+        'commentaire_rh' => $motif,
+        'traite_par'     => $rhId,
+    ]);
+}
+      public function annuler(int $id, int $rhId, string $motif): bool
     {
+            $conge = $this->find($id);
+    $soldeModel = new SoldeModel();
+    $annee = (int) substr($conge['date_debut'],0,4);
+    $typeCongeModel= new TypeCongeModel();
+    if($conge['statut']=='approuve'){
+        $typeConge = $typeCongeModel->find($conge['type_conge_id']);
+
+           if($typeConge['deductible']){
+            $soldeModel->recréditer(
+                $conge['employe_id'],
+                $conge['type_conge_id'],
+                $annee,
+                $conge['nb_jours']
+                );
+                }
+
+        }
         return $this->update($id, [
-            'statut'         => 'refuse',
+            'statut'         => 'annule',
             'commentaire_rh' => $motif,
             'traite_par'     => $rhId,
         ]);
