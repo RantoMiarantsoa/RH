@@ -11,15 +11,29 @@ use Tests\Support\Libraries\ConfigReader;
 
 class RhController extends Controller
 {
+    public function __construct()
+    {
+        // Vérifier l'authentification et le rôle
+        if (!session()->get('logged_in')) {
+            redirect()->to('/login')->send();
+        }
+        
+        $role = session()->get('role');
+        if ($role !== 'admin' && $role !== 'rh') {
+            redirect()->to('/login')->with('error', 'Accès refusé')->send();
+        }
+    }
     public function index()
     {
         return view('rh/index');
     }
+
     public function showDemandeAttente()
     {
         $congeModel = new CongeModel();
 
         $data['conges'] = $congeModel->getEnAttente();
+        $data['role'] = session()->get('role');
 
         return view('rh/demandes', $data);
     }
@@ -27,10 +41,15 @@ class RhController extends Controller
 
     public function approuverConge($id)
     {
+        $rhId  = session()->get('employe_id');
+
+        if (!$rhId) {
+            return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
+        }
+
         $congeModel = new CongeModel();
         $soldeModel = new SoldeModel();
 
-        $rhId  = session()->get('employe_id');
         $conge = $congeModel->find($id);
 
         if (!$conge) {
@@ -59,20 +78,31 @@ class RhController extends Controller
         return redirect()->to('/rh/demandes');
     }
 
-    public function refuserDemande($id)
+    public function refuserConge($id)
     {
-        $congeModel = new CongeModel();
         $rhId = session()->get('employe_id');
-        $congeModel->refuser($id, $rhId, 'Demande refusé');
 
-        return redirect()->to('/rh/demandes')->with('success', 'Demande refusée avec succès');
-    }
-    public function annuleDemande($id)
-    {
+        if (!$rhId) {
+            return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
+        }
+
         $congeModel = new CongeModel();
+        $congeModel->refuser($id, $rhId, 'Demande refusée');
+
+        return redirect()->to('/rh/demandes')->with('success', 'Congé refusé avec succès');
+    }
+
+    public function annulerConge($id)
+    {
         $rhId = session()->get('employe_id');
+
+        if (!$rhId) {
+            return redirect()->to('/employe/connexion')->with('error', 'Veuillez vous connecter');
+        }
+
+        $congeModel = new CongeModel();
         $congeModel->annuler($id, $rhId, 'Demande annulée');
 
-        return redirect()->to('/rh/demandes')->with('success', 'Demande refusée avec succès');
+        return redirect()->to('/rh/demandes')->with('success', 'Congé annulé avec succès');
     }
 }

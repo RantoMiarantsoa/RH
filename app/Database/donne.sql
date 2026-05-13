@@ -39,6 +39,6 @@ INSERT INTO soldes (employe_id, type_conge_id, annee, jour_attribues, jour_pris)
 -- CONGES
 -- =========================
 INSERT INTO conges (employe_id, type_conge_id, date_debut, date_fin, nb_jours, motif, statut, commentaire_rh, traite_par) VALUES
-(3, 1, '2026-01-10', '2026-01-15', 5, 'Vacances', 'validé', 'OK RH', 2),
-(4, 2, '2026-02-01', '2026-02-03', 3, 'Maladie', 'en attente', NULL, NULL),
-(1, 1, '2026-03-10', '2026-03-12', 3, 'Repos', 'validé', 'Approuvé', 2);
+(3, 1, '2026-01-10', '2026-01-15', 5, 'Vacances', 'approuve', 'OK RH', 2),
+(4, 2, '2026-02-01', '2026-02-03', 3, 'Maladie', 'en_attente', NULL, NULL),
+(1, 1, '2026-03-10', '2026-03-12', 3, 'Repos', 'approuve', 'Approuvé', 2);
