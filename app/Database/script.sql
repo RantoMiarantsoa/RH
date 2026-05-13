@@ -62,3 +62,24 @@ CREATE TABLE conges (
     FOREIGN KEY (traite_par)
         REFERENCES employes(id)
 );
+
+INSERT INTO employes(
+    nom,
+    prenom,
+    email,
+    password,
+    role,
+    departement_id,
+    date_embauche,
+    actif
+)
+VALUES (
+    'Rakoto',
+    'Jean',
+    'jean@gmail.com',
+    '$2y$10$abcdefghijklmnopqrstuv',
+    'employe',
+    1,
+    '2026-01-10',
+    1
+);
