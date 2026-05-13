@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demandes de congé</title>
-    <link rel="stylesheet" href="<?= base_url('css/demandes.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('style/demandes.css') ?>">
 </head>
 <body>
 
