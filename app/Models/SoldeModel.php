@@ -38,12 +38,21 @@ class SoldeModel extends Model
                     ->where('annee',         $annee)
                     ->update();
     }
-    public function recréditer(int $employeId, int $typeCongeId, int $annee, float $jours): bool
+    public function restituer(int $employeId, int $typeCongeId, int $annee, float $jours): bool
 {
     return $this->set('jour_pris', "jour_pris - $jours", false)
                 ->where('employe_id',    $employeId)
                 ->where('type_conge_id', $typeCongeId)
                 ->where('annee',         $annee)
                 ->update();
+}
+public function getSoldesEmploye(int $employeId, int $annee)
+{
+    return $this->select('soldes.*, type_conge.libelle,
+                          (soldes.jour_attribues - soldes.jour_pris) AS restant')
+                ->join('type_conge', 'type_conge.id = soldes.type_conge_id')
+                ->where('soldes.employe_id', $employeId)
+                ->where('soldes.annee',      $annee)
+                ->findAll();
 }
 }
