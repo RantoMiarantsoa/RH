@@ -10,7 +10,7 @@ $routes->get('/produits', 'Produit::index');
 $routes->get('/produits/(:num)', 'Produit::show/$1');
 
 $routes->group('employe',function($routes){
-    $routes->get('/connexion','Employe::connexion');
+    $routes->post('/connexion','Employe::connexion');
     $routes->get('/deconnexion','Employe::deconnexion'); 
 });
 
