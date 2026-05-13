@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TechMada RH — Espace Client Congés</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+</head>
+<body>
+
+<section class="app-wrap geo-bg">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo-icon"><i class="bi bi-calendar-check"></i></div>
+      <div class="sidebar-brand-name">TechMada<span>Congés</span></div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><button class="nav-btn active" data-page="dashboard"><i class="bi bi-speedometer2"></i> Tableau de bord</button></li>
+      <li><button class="nav-btn" data-page="demande"><i class="bi bi-plus-circle"></i> Nouvelle demande</button></li>
+      <li><button class="nav-btn" data-page="demandes"><i class="bi bi-list-check"></i> Mes demandes</button></li>
+      <li><button class="nav-btn" data-page="solde"><i class="bi bi-hourglass-split"></i> Mes congés</button></li>
+      <li><button class="nav-btn" data-page="profil"><i class="bi bi-person-circle"></i> Mon profil</button></li>
+    </ul>
+
+    <div class="sidebar-user">
+      <div class="s-user-row">
+        <div class="avatar">JR</div>
+        <div>
+          <div class="user-name">Jean Rakoto</div>
+          <div class="user-role">Employé</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;justify-content:center" onclick="deconnexion()">
+        <i class="bi bi-box-arrow-right"></i> Déconnexion
+      </button>
+    </div>
+
+    <div class="footer-app"><i class="bi bi-c-circle"></i> 2025 TechMada</div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="page-title">Tableau de bord</div>
+        <div class="topbar-breadcrumb" id="page-breadcrumb">Accueil / Tableau de bord</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" title="Notifications"><i class="bi bi-bell"></i></button>
+        <button class="icon-btn" title="Aide"><i class="bi bi-question-circle"></i></button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="dashboard">
+        <h2 style="margin:0 0 1rem;font-size:1.3rem">Bienvenue, Jean ! 👋</h2>
+        
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Congés Restants</div>
+                <div class="metric-value">12</div>
+              </div>
+              <div class="metric-icon mi-blue"><i class="bi bi-calendar-range"></i></div>
+            </div>
+            <div class="metric-detail">sur 30 jours disponibles</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">En Attente</div>
+                <div class="metric-value">2</div>
+              </div>
+              <div class="metric-icon mi-amber"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+            <div class="metric-detail">Demandes en cours</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Approuvées</div>
+                <div class="metric-value">8</div>
+              </div>
+              <div class="metric-icon mi-green"><i class="bi bi-check-circle"></i></div>
+            </div>
+            <div class="metric-detail">Congés confirmés</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Utilisées</div>
+                <div class="metric-value">10</div>
+              </div>
+              <div class="metric-icon mi-blue"><i class="bi bi-calendar-check"></i></div>
+            </div>
+            <div class="metric-detail">Jours consommés</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.75rem">
+          <div class="form-card">
+            <h3 class="form-title"><i class="bi bi-info-circle"></i> Résumé des congés</h3>
+            <div class="profile-item" style="margin-bottom:.75rem">
+              <div class="profile-item-label">Solde Initial</div>
+              <div class="profile-item-value">30 jours</div>
+            </div>
+            <div class="profile-item" style="margin-bottom:.75rem">
+              <div class="profile-item-label">Jours Utilisés</div>
+              <div class="profile-item-value">10 jours</div>
+            </div>
+            <div class="profile-item" style="margin-bottom:.75rem">
+              <div class="profile-item-label">Jours Approuvés (Non Utilisés)</div>
+              <div class="profile-item-value">8 jours</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-label">Jours Restants</div>
+              <div class="profile-item-value" style="color:var(--success);font-size:1.2rem"><strong>12 jours</strong></div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <h3 class="form-title"><i class="bi bi-lightning-charge"></i> Actions rapides</h3>
+            <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="navigateTo('demande')">
+              <i class="bi bi-plus-circle"></i> Nouvelle demande
+            </button>
+            <button class="btn btn-secondary" style="width:100%;margin-bottom:8px" onclick="navigateTo('demandes')">
+              <i class="bi bi-list-check"></i> Voir mes demandes
+            </button>
+            <button class="btn btn-secondary" style="width:100%;margin-bottom:8px" onclick="navigateTo('solde')">
+              <i class="bi bi-calendar"></i> Détail des congés
+            </button>
+            <button class="btn btn-secondary" style="width:100%;" onclick="navigateTo('profil')">
+              <i class="bi bi-person"></i> Modifier profil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: NOUVELLE DEMANDE -->
+      <div class="page" id="demande">
+        <h2 style="margin:0 0 1.5rem;font-size:1.3rem">Nouvelle demande de congé</h2>
+
+        <div class="form-card">
+          <form id="formDemande" onsubmit="soumettreFormulaire(event, 'demande')">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Type de congé <span style="color:var(--danger)">*</span></label>
+                <select class="form-select" required>
+                  <option value="">-- Sélectionner --</option>
+                  <option value="annuel">Congé annuel</option>
+                  <option value="maladie">Congé maladie</option>
+                  <option value="maternite">Congé maternité</option>
+                  <option value="paternite">Congé paternité</option>
+                  <option value="deuil">Congé deuil</option>
+                  <option value="sans-solde">Congé sans solde</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nombre de jours <span style="color:var(--danger)">*</span></label>
+                <input type="number" class="form-input" placeholder="5" min="1" max="30" required/>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Date de début <span style="color:var(--danger)">*</span></label>
+                <input type="date" class="form-input" required/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date de fin <span style="color:var(--danger)">*</span></label>
+                <input type="date" class="form-input" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Motif / Observations</label>
+              <textarea class="form-textarea" placeholder="Décrivez le motif de votre demande..."></textarea>
+            </div>
+
+            <div class="flash flash-info">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Vous avez <strong>12 jours</strong> de congés disponibles pour cette année.</span>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i> Soumettre la demande
+              </button>
+              <button type="reset" class="btn btn-secondary">
+                <i class="bi bi-arrow-clockwise"></i> Réinitialiser
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-card" style="margin-top:1.75rem">
+          <h3 class="form-title"><i class="bi bi-question-circle"></i> Besoin d'aide ?</h3>
+          <div style="font-size:.9rem;color:var(--muted);line-height:1.6">
+            <p><strong>Congé annuel :</strong> Jours de repos réguliers (30 jours/an).</p>
+            <p><strong>Congé maladie :</strong> En cas de problème de santé (sur justificatif).</p>
+            <p><strong>Congé maternité/paternité :</strong> Pour l'arrivée d'un enfant.</p>
+            <p><strong>Congé sans solde :</strong> Ne consomme pas vos jours disponibles.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: MES DEMANDES -->
+      <div class="page" id="demandes">
+        <h2 style="margin:0 0 1.5rem;font-size:1.3rem">Mes demandes de congé</h2>
+
+        <div style="margin-bottom:1rem;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="filtrerDemandes('tout')">
+            Toutes <span style="background:rgba(0,0,0,.1);padding:0 6px;border-radius:10px;margin-left:6px">5</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="filtrerDemandes('pending')">
+            En attente <span style="background:rgba(184,117,10,.2);padding:0 6px;border-radius:10px;margin-left:6px;color:var(--warn)">2</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="filtrerDemandes('approuvee')">
+            Approuvées <span style="background:rgba(30,107,63,.2);padding:0 6px;border-radius:10px;margin-left:6px;color:var(--success)">2</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="filtrerDemandes('rejetee')">
+            Rejetées <span style="background:rgba(192,57,43,.2);padding:0 6px;border-radius:10px;margin-left:6px;color:var(--danger)">1</span>
+          </button>
+        </div>
+
+        <div id="demandesContainer">
+          <!-- DEMANDE 1 -->
+          <div class="request-item" data-statut="pending">
+            <div class="request-header">
+              <div>
+                <div class="request-title">Congé annuel</div>
+                <div class="request-date">Demandé le 08 mai 2025</div>
+              </div>
+              <span class="statut s-pending">En attente</span>
+            </div>
+            <div class="request-body">
+              Repos personnel pour voyage en famille.
+            </div>
+            <div class="request-footer">
+              <div>
+                <div class="request-dates">📅 12 mai → 19 mai 2025 <strong>(8 jours)</strong></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-secondary" onclick="voirDetails('demande1')">Détails</button>
+                <button class="btn btn-sm btn-danger" onclick="annulerDemande('demande1')">Annuler</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEMANDE 2 -->
+          <div class="request-item" data-statut="pending">
+            <div class="request-header">
+              <div>
+                <div class="request-title">Congé maladie</div>
+                <div class="request-date">Demandé le 05 mai 2025</div>
+              </div>
+              <span class="statut s-pending">En attente</span>
+            </div>
+            <div class="request-body">
+              Problème de santé mineur, certificat médical fourni.
+            </div>
+            <div class="request-footer">
+              <div>
+                <div class="request-dates">📅 10 mai → 11 mai 2025 <strong>(2 jours)</strong></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-secondary" onclick="voirDetails('demande2')">Détails</button>
+                <button class="btn btn-sm btn-danger" onclick="annulerDemande('demande2')">Annuler</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEMANDE 3 -->
+          <div class="request-item" data-statut="approuvee">
+            <div class="request-header">
+              <div>
+                <div class="request-title">Congé annuel</div>
+                <div class="request-date">Demandé le 15 avril 2025</div>
+              </div>
+              <span class="statut s-approuvee">Approuvée</span>
+            </div>
+            <div class="request-body">
+              Congé pour repos personnel.
+            </div>
+            <div class="request-footer">
+              <div>
+                <div class="request-dates">📅 01 mai → 05 mai 2025 <strong>(5 jours)</strong></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-secondary" onclick="voirDetails('demande3')">Détails</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEMANDE 4 -->
+          <div class="request-item" data-statut="approuvee">
+            <div class="request-header">
+              <div>
+                <div class="request-title">Congé sans solde</div>
+                <div class="request-date">Demandé le 01 avril 2025</div>
+              </div>
+              <span class="statut s-approuvee">Approuvée</span>
+            </div>
+            <div class="request-body">
+              Congé sans solde pour projet personnel.
+            </div>
+            <div class="request-footer">
+              <div>
+                <div class="request-dates">📅 20 avril → 27 avril 2025 <strong>(3 jours)</strong></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-secondary" onclick="voirDetails('demande4')">Détails</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEMANDE 5 -->
+          <div class="request-item" data-statut="rejetee">
+            <div class="request-header">
+              <div>
+                <div class="request-title">Congé annuel</div>
+                <div class="request-date">Demandé le 10 mars 2025</div>
+              </div>
+              <span class="statut s-rejetee">Rejetée</span>
+            </div>
+            <div class="request-body">
+              Chevauchement avec une période critique du projet.
+            </div>
+            <div class="request-footer">
+              <div>
+                <div class="request-dates">📅 25 mars → 30 mars 2025 <strong>(6 jours)</strong></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-secondary" onclick="voirDetails('demande5')">Détails</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: MES CONGÉS (SOLDE) -->
+      <div class="page" id="solde">
+        <h2 style="margin:0 0 1.5rem;font-size:1.3rem">Mes congés et soldes</h2>
+
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Solde Initial</div>
+                <div class="metric-value">30</div>
+              </div>
+              <div class="metric-icon mi-blue"><i class="bi bi-calendar"></i></div>
+            </div>
+            <div class="metric-detail">jours annuels</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Utilisés</div>
+                <div class="metric-value">10</div>
+              </div>
+              <div class="metric-icon mi-amber"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+            <div class="metric-detail">jours consommés</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Approuvés</div>
+                <div class="metric-value">8</div>
+              </div>
+              <div class="metric-icon mi-green"><i class="bi bi-check-circle"></i></div>
+            </div>
+            <div class="metric-detail">jours confirmés</div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <div>
+                <div class="metric-label">Restants</div>
+                <div class="metric-value">12</div>
+              </div>
+              <div class="metric-icon mi-green"><i class="bi bi-check-lg"></i></div>
+            </div>
+            <div class="metric-detail">jours disponibles</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.75rem">
+          <div class="data-card">
+            <div class="data-card-head">
+              <h3>Congé Annuel</h3>
+            </div>
+            <div class="data-card-body">
+              <div style="margin-bottom:1rem">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+                  <span style="font-size:.85rem;font-weight:500">Progression</span>
+                  <span style="font-family:'DM Mono',monospace;font-size:.85rem">18/30 jours</span>
+                </div>
+                <div style="height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden">
+                  <div style="height:100%;width:60%;background:var(--forest);transition:width .3s"></div>
+                </div>
+              </div>
+              <div style="font-size:.8rem;color:var(--muted);line-height:1.6">
+                <p><strong>Solde initial :</strong> 30 jours</p>
+                <p><strong>Utilisés :</strong> 10 jours</p>
+                <p><strong>Approuvés :</strong> 8 jours</p>
+                <p><strong>Restants :</strong> <strong style="color:var(--success)">12 jours</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-card">
+            <div class="data-card-head">
+              <h3>Congé Maladie</h3>
+            </div>
+            <div class="data-card-body">
+              <div style="margin-bottom:1rem">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+                  <span style="font-size:.85rem;font-weight:500">Progression</span>
+                  <span style="font-family:'DM Mono',monospace;font-size:.85rem">2/5 jours</span>
+                </div>
+                <div style="height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden">
+                  <div style="height:100%;width:40%;background:var(--warn);transition:width .3s"></div>
+                </div>
+              </div>
+              <div style="font-size:.8rem;color:var(--muted);line-height:1.6">
+                <p><strong>Solde initial :</strong> 5 jours</p>
+                <p><strong>Utilisés :</strong> 2 jours</p>
+                <p><strong>Approuvés :</strong> 0 jour</p>
+                <p><strong>Restants :</strong> <strong style="color:var(--success)">3 jours</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-card">
+            <div class="data-card-head">
+              <h3>Congé Sans Solde</h3>
+            </div>
+            <div class="data-card-body">
+              <div style="margin-bottom:1rem">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+                  <span style="font-size:.85rem;font-weight:500">Progression</span>
+                  <span style="font-family:'DM Mono',monospace;font-size:.85rem">3/∞ jours</span>
+                </div>
+                <div style="height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden">
+                  <div style="height:100%;width:30%;background:var(--info);transition:width .3s"></div>
+                </div>
+              </div>
+              <div style="font-size:.8rem;color:var(--muted);line-height:1.6">
+                <p><strong>Type :</strong> Illimité</p>
+                <p><strong>Utilisés :</strong> 3 jours</p>
+                <p><strong>Approuvés :</strong> 0 jour</p>
+                <p><strong>Note :</strong> N'affecte pas votre solde</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: MON PROFIL -->
+      <div class="page" id="profil">
+        <h2 style="margin:0 0 1.5rem;font-size:1.3rem">Mon profil</h2>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.75rem">
+          <div class="form-card">
+            <h3 class="form-title"><i class="bi bi-info-circle"></i> Informations personnelles</h3>
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-input" value="Jean" placeholder="Jean"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-input" value="Rakoto" placeholder="Rakoto"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" value="jean.rakoto@techmada.mg" placeholder="email@example.com"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Téléphone</label>
+              <input type="tel" class="form-input" value="+261 20 12 345 67" placeholder="+261 ..."/>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="sauvegarderProfil()">
+                <i class="bi bi-floppy"></i> Enregistrer les modifications
+              </button>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <h3 class="form-title"><i class="bi bi-briefcase"></i> Informations professionnelles</h3>
+            <div class="profile-item">
+              <div class="profile-item-label">Numéro d'employé</div>
+              <div class="profile-item-value">EMP-2022-0145</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-label">Département</div>
+              <div class="profile-item-value">Informatique (IT)</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-label">Poste</div>
+              <div class="profile-item-value">Développeur Full Stack</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-label">Date d'embauche</div>
+              <div class="profile-item-value">01 mars 2022</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-item-label">Supérieur hiérarchique</div>
+              <div class="profile-item-value">Marie Rabe (RH)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" style="margin-top:1.75rem">
+          <h3 class="form-title"><i class="bi bi-lock"></i> Sécurité & Compte</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <button class="btn btn-secondary">
+              <i class="bi bi-key"></i> Changer le mot de passe
+            </button>
+            <button class="btn btn-secondary">
+              <i class="bi bi-shield-lock"></i> Authentification 2FA
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+// NAVIGATION DYNAMIQUE
+function navigateTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  
+  updateTopbar(page);
+}
+
+const pageConfig = {
+  'dashboard': { title: 'Tableau de bord', breadcrumb: 'Accueil / Tableau de bord' },
+  'demande': { title: 'Nouvelle demande', breadcrumb: 'Accueil / Nouvelle demande' },
+  'demandes': { title: 'Mes demandes', breadcrumb: 'Accueil / Mes demandes' },
+  'solde': { title: 'Mes congés', breadcrumb: 'Accueil / Mes congés' },
+  'profil': { title: 'Mon profil', breadcrumb: 'Accueil / Mon profil' }
+};
+
+function updateTopbar(page) {
+  const config = pageConfig[page] || {};
+  document.getElementById('page-title').textContent = config.title || 'Page';
+  document.getElementById('page-breadcrumb').textContent = config.breadcrumb || '';
+}
+
+// EVENT LISTENERS
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => navigateTo(btn.dataset.page));
+});
+
+// FONCTIONS
+function soumettreFormulaire(e, type) {
+  e.preventDefault();
+  alert('✅ Demande soumise avec succès ! Vous recevrez une réponse sous 2-3 jours.');
+  navigateTo('demandes');
+}
+
+function voirDetails(id) {
+  alert('📋 Détails de la demande ' + id);
+}
+
+function annulerDemande(id) {
+  if(confirm('Êtes-vous sûr de vouloir annuler cette demande ?')) {
+    alert('❌ Demande annulée.');
+  }
+}
+
+function filtrerDemandes(statut) {
+  const container = document.getElementById('demandesContainer');
+  const items = container.querySelectorAll('.request-item');
+  
+  items.forEach(item => {
+    if(statut === 'tout' || item.dataset.statut === statut) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+function sauvegarderProfil() {
+  alert('✅ Profil mis à jour avec succès !');
+}
+
+function deconnexion() {
+  if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+    alert('👋 À bientôt !');
+    // Redirection vers page de login
+    // window.location.href = 'login.html';
+  }
+}
+
+// INITIALISATION
+navigateTo('dashboard');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Auto-hide alerts après 4 secondes
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function (alert) {
+        setTimeout(function () {
+            alert.style.transition = 'opacity 0.5s';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        }, 4000);
+    });
+
+});

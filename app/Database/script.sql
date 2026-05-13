@@ -57,8 +57,9 @@ CREATE TABLE conges (
         REFERENCES employes(id),
 
     FOREIGN KEY (type_conge_id)
-        REFERENCES types_conge(id),
+        REFERENCES type_conge(id),
 
     FOREIGN KEY (traite_par)
         REFERENCES employes(id)
 );
+
